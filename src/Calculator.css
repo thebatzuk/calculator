@@ -1,0 +1,84 @@
+body {
+  text-align: center;
+  font-size: 16px;
+}
+
+#upper-section {
+  margin: auto;
+  padding: 10vh 10px 0 10px;
+  align-self: auto;
+  max-width: 400px;
+}
+
+#button-grid {
+  margin: auto;
+  padding: 0 10px;
+  align-self: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  max-width: 400px;
+}
+
+button {
+  font-size: 1.6em;
+  outline: 1px solid black;
+  border: none;
+  padding: .8em;
+  background-color: #FFFDF7;
+}
+
+button:hover {
+  outline: 2px solid black;
+  z-index: 3;
+}
+
+#equals {
+  background-color: #99D6EA;
+}
+
+#zero {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+#clear {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  background-color: #FDD85D;
+}
+
+#delete {
+  background-color: #FDD85D;
+}
+
+#formula {
+  text-align: right;
+  font-size: 1em;
+  font-family: 'Courier New', Courier, monospace;
+  min-height: 1.2em;
+  overflow-wrap: break-word;
+  outline: 1px solid black;
+  background-color: black;
+  color: #FFFDF7;
+}
+
+#display {
+  text-align: left;
+  padding: .2em 0 .2em .3em;
+  font-size: 2.1em;
+  font-family: 'Courier New', Courier, monospace;
+  min-height: 1em;
+  overflow-wrap: break-word;
+  outline: 1px solid black;
+  background-color: black;
+  color: #FDD85D;
+}
+
+#social-footer {
+  height: 10vh;
+  margin: 0;
+  padding: 3vh 0;
+  font-size: 0.6em;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
