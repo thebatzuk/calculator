@@ -1,6 +1,9 @@
 import './Calculator.css';
 import React from 'react';
 
+const keycodes = [{"id":8,"name":"Backspace"},{"id":13,"name":"Enter"},{"id":48,"name":"0"},{"id":49,"name":"1"},{"id":50,"name":"2"},{"id":51,"name":"3"},{"id":52,"name":"4"},{"id":53,"name":"5"},{"id":54,"name":"6"},{"id":55,"name":"7"},{"id":56,"name":"8"},{"id":57,"name":"9"},{"id":96,"name":"0"},{"id":97,"name":"1"},{"id":98,"name":"2"},{"id":99,"name":"3"},{"id":100,"name":"4"},{"id":101,"name":"5"},{"id":102,"name":"6"},{"id":103,"name":"7"},{"id":104,"name":"8"},{"id":105,"name":"9"},{"id":106,"name":"x"},{"id":107,"name":"+"},{"id":109,"name":"-"},{"id":110,"name":"."},{"id":111,"name":"÷"}];
+
+
 class Buttons extends React.Component {
   render() {
     return (
@@ -208,11 +211,23 @@ class Calculator extends React.Component {
     this.handleEquals = this.handleEquals.bind(this);
     this.handlePoint = this.handlePoint.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.printStateToConsole = this.printStateToConsole.bind(this);
   }
 
-  handleNumber(e) {
-    const number = e.target.value;
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress);
+  }
+
+  handleNumber(e, key = '') {
+    let number;
+    if(key !== '') number = key;
+    else number = e.target.value;
+
     const {evaluated, value, formula} = this.state;
 
     if(evaluated) {
@@ -239,8 +254,11 @@ class Calculator extends React.Component {
     this.setState({evaluated: false});
   }
 
-  handleOperation(e) {
-    const operation = e.target.value;
+  handleOperation(e, key = '') {
+    let operation;
+    if(key !== '') operation = key;
+    else operation = e.target.value;
+
     const {evaluated, value, formula} = this.state;
 
     if(evaluated) {
@@ -277,7 +295,7 @@ class Calculator extends React.Component {
   handleEquals() {
     let expression = this.state.formula;
     const {evaluated} = this.state;
-    if(!evaluated) {
+    if(!evaluated && expression !== '') {
       while (endsWithOperator.test(expression)) {
         expression = expression.slice(0, -1);
       }
@@ -326,7 +344,7 @@ class Calculator extends React.Component {
         value: value.length === 1
                 ? '0' : value.slice(0, -1), 
         formula: value.length === 1
-                  ? '0' : value.slice(0, -1)
+                  ? '' : value.slice(0, -1)
       });
     } else {
       this.setState({
@@ -349,6 +367,44 @@ class Calculator extends React.Component {
       formula: '',
       evaluated: false,
     });
+  }
+
+  handleKeyPress(event) {
+    const value = keycodes.find(({name, id}) => id === event.keyCode).name;
+    
+    switch(value) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        this.handleNumber(null, value);
+        break;
+      
+      case '÷':
+      case 'x':
+      case '-':
+      case '+':
+        this.handleOperation(null, value);
+        break;
+      
+      case '.':
+        this.handlePoint();
+        break;
+
+      case 'Enter':
+        this.handleEquals();
+        break;
+      
+      case 'Backspace':
+        this.handleDelete();
+        break;
+    }
   }
 
   printStateToConsole() {
