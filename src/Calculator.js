@@ -7,6 +7,7 @@ const keycodes = [{"id":8,"name":"Backspace"},{"id":13,"name":"Enter"},{"id":48,
 //REGEX
 const isOperator = /[x+\-÷]/;
 const endsWithOperator = /[x+\-÷]$/;
+const endsWithOperatorZero = /[x+\-÷]0$/;
 
 //visual
 const showSocial = true;
@@ -246,10 +247,12 @@ class Calculator extends React.Component {
           ? number : value + number,
         
         formula:
-          value === '0' && number === '0'
+        value === '0' && number === '0'
           ? formula === ''
             ? '' : formula
-          : formula + number 
+          : endsWithOperatorZero.test(formula)
+            ? formula.slice(0, -1) + number
+            : formula + number 
       });
     }
 
@@ -406,6 +409,9 @@ class Calculator extends React.Component {
       case 'Backspace':
         this.handleDelete();
         break;
+      
+      default:
+        break;
     }
   }
 
@@ -415,7 +421,7 @@ class Calculator extends React.Component {
   }
 
   render() {
-    //this.printStateToConsole();
+    this.printStateToConsole();
 
     return (
       <div className="App">
