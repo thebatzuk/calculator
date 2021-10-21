@@ -1,8 +1,15 @@
 import './Calculator.css';
 import React from 'react';
 
+//onKeyPress key codes
 const keycodes = [{"id":8,"name":"Backspace"},{"id":13,"name":"Enter"},{"id":48,"name":"0"},{"id":49,"name":"1"},{"id":50,"name":"2"},{"id":51,"name":"3"},{"id":52,"name":"4"},{"id":53,"name":"5"},{"id":54,"name":"6"},{"id":55,"name":"7"},{"id":56,"name":"8"},{"id":57,"name":"9"},{"id":96,"name":"0"},{"id":97,"name":"1"},{"id":98,"name":"2"},{"id":99,"name":"3"},{"id":100,"name":"4"},{"id":101,"name":"5"},{"id":102,"name":"6"},{"id":103,"name":"7"},{"id":104,"name":"8"},{"id":105,"name":"9"},{"id":106,"name":"x"},{"id":107,"name":"+"},{"id":109,"name":"-"},{"id":110,"name":"."},{"id":111,"name":"÷"}];
 
+//REGEX
+const isOperator = /[x+\-÷]/;
+const endsWithOperator = /[x+\-÷]$/;
+
+//visual
+const showSocial = true;
 
 class Buttons extends React.Component {
   render() {
@@ -157,7 +164,6 @@ class Buttons extends React.Component {
   }
 }
 
-const showSocial = true;
 class Social extends React.Component {
   render() {
     if(!showSocial) return (<div></div>);
@@ -191,10 +197,6 @@ class Formula extends React.Component {
     );
   }
 }
-
-//REGEX
-const isOperator = /[x+\-÷]/;
-const endsWithOperator = /[x+\-÷]$/;
 
 class Calculator extends React.Component {
   constructor(props) {
